@@ -1,5 +1,88 @@
 
 
+___________________________________________________________________________________________________________Shopping
+
+productList.html
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<table border="1">
+	<tr>
+		<th>No.</th>
+		<th>Name</th>
+		<th>Price</th>
+		<th>...</th>
+	</tr>
+	<tr>
+		<td>1</td>
+		<td>C</td>
+		<td>60</td>
+		<td><a href="AddShoppingCartServlet?id=1&name=C">Add to ShoppingCart</a></td>
+	</tr>
+	<tr>
+		<td>2</td>
+		<td>Java</td>
+		<td>40</td>
+		<td><a href = "AddShoppingCartSerclet?id=2&name=Java">Add to ShoppingCart</a></td>
+	</tr>
+	<tr>
+		<td>3</td>
+		<td>Python</td>
+		<td>50</td>
+		<td><a href = "AddShoppingCartSerclet?id=3&name=Pythin">Add to ShoppingCart</a></td>
+	</tr>
+	<tr>
+		<td>4</td>
+		<td>VB</td>
+		<td>20</td>
+		<td><a href="AddShoppingCartServlet?id=4&name=VB">Add to ShoppingCart</a></td>
+	</tr>
+</table>
+<a href="ShowShoppingCartServlet">show ShoppingCart</a>
+</body>
+</html>
+
+AddShoppingCartServlet
+protected void doPost(HttpServletRequest request, HttpServletResponse response) 
+	        throws ServletException, IOException {
+		String bookName = request.getParameter("name");
+		List<String> booklist = null;
+		HttpSession session = request.getSession();
+		Object shopingcart = session.getAttribute("shoppingcart");
+		if (shopingcart == null) {
+			booklist = new ArrayList<String>();
+			booklist.add(bookName);
+			session.setAttribute("shoppingcart", booklist);//添加到session
+		} else {
+			booklist = (List<String>) shopingcart;
+			booklist.add(bookName);
+			session.setAttribute("shoppingcart", booklist);//添加到session
+		}
+	}
+
+ShowShoppingCartServlet
+
+protected void doPost(HttpServletRequest request, HttpServletResponse response) 
+	        throws ServletException, IOException {
+		
+		PrintWriter writer = response.getWriter();
+		HttpSession session = request.getSession();
+		Object shoppingcart = session.getAttribute("shoppingcart");
+		
+		if (shoppingcart == null) {
+			writer.write("No Selected......");
+		} else {
+			writer.write("your Selected:<br />");
+			List<String> booklist = (List<String>) shoppingcart;//shoppingcart的数组
+			for (int i = 0; i < booklist.size(); i++) {
+				writer.write(i + ": " + booklist.get(i).toString() + "<br />");
+			}
+		}
 ___________________________________________________________________________________________________________Login
 login.html
 
