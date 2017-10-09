@@ -56,6 +56,7 @@ public class ActivateCode extends HttpServlet {
 					@Override
 					protected PasswordAuthentication getPasswordAuthentication() {
 						// 两个参数：1. 发件人地址，2. 授权码
+						//("bddylww@126.com", "lww123")
 						return new PasswordAuthentication("126发件人邮箱email", "邮箱授权码");
 					}
 				
@@ -65,8 +66,10 @@ public class ActivateCode extends HttpServlet {
 		//给邮件对象设置发件人、收件人、邮件主题、邮件内容
 		try {
 			//设置邮件发件人
+			//("bddylww@126.com")
 			msg.setFrom(new InternetAddress("126发件人email"));
 			//设置邮件收件人
+			//("273429028@qq.com")
 			msg.setRecipient(Message.RecipientType.TO, 
 					new InternetAddress("收件人email"));
 			//设置邮件主题
